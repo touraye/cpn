@@ -4,6 +4,7 @@ import {
 	SignedIn,
 } from '@clerk/nextjs'
 import { currentUser } from '@clerk/nextjs/server'
+import { ThemeToggler } from '@/components/ThemeToggler'
 
 
 export default async function Home() {
@@ -16,7 +17,8 @@ export default async function Home() {
 			<SignedIn>
 				<UserButton />
       </SignedIn>
-      <h3>Welcome, {user.firstName}</h3>
+			<h3>Welcome, {user.firstName}</h3>
+			<ThemeToggler />
 		</>
 	)
 }
