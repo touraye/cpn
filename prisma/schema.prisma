@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// user model - account owner either by Google or email
+ model User {
+  id String @id @default(uuid())
+  clerkUserId String @unique
+  email String @unique
+  name String?
+  imageUrl String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  // user can have multiple meter number
+  meters Meter[]
+ }
+
+// meter model - a meter belongs to only one user
+ model Meter {
+  id String @id @default(uuid())  
+  // meter numbers are going to be auto generated on the F-End
+  meterNumber String @unique
+  userId String
+  user User @relation(fields: [userId], references: [clerkUserId], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  tokens Token[]
+  @@index([userId])
+ }
+
+ // tokens model
+ model Token {
+  id String @id @default(uuid())
+  amount Float
+  meterId String
+  meter Meter @relation(fields: [meterId], references: [id], onDelete: Cascade)
+  used Boolean @default(false)
+  createdAt DateTime @default(now())
+  @@index([meterId])
+ }
+
