@@ -1,7 +1,22 @@
-export default function Home() {
-  return (
-    <>
-     <h1 className="text-xl">Cash Power App</h1>
-    </>
-  );
+import Guest from '@/components/Guest'
+import {	
+	UserButton,
+	SignedIn,
+} from '@clerk/nextjs'
+import { currentUser } from '@clerk/nextjs/server'
+
+
+export default async function Home() {
+  const user = await currentUser()
+	if (!user) {
+		return <Guest />
+	}
+	return (
+		<>			
+			<SignedIn>
+				<UserButton />
+      </SignedIn>
+      <h3>Welcome, {user.firstName}</h3>
+		</>
+	)
 }
