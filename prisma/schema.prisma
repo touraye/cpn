@@ -32,6 +32,7 @@ datasource db {
   // meter numbers are going to be auto generated on the F-End
   meterNumber String @unique
   userId String
+  meterName String
   user User @relation(fields: [userId], references: [clerkUserId], onDelete: Cascade)
   createdAt DateTime @default(now())
   tokens Token[]
