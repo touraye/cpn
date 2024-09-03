@@ -43,10 +43,10 @@ datasource db {
  model Token {
   id String @id @default(uuid())
   amount Float
-  meterId String
-  meter Meter @relation(fields: [meterId], references: [id], onDelete: Cascade)
+  meterNumber String
+  meter Meter @relation(fields: [meterNumber], references: [id], onDelete: Cascade)
   used Boolean @default(false)
   createdAt DateTime @default(now())
-  @@index([meterId])
+  @@index([meterNumber])
  }
 
